@@ -12,10 +12,12 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useRegisterModal from "@/app/Hooks/useRegisterModal";
 
 const LoginModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setLoading] = useState(false);
 
   const {
@@ -31,18 +33,18 @@ const LoginModal = () => {
 
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setLoading(true);
     signIn("credentials", { ...data, redirect: false })
       .then((res) => {
-        setLoading(false);
-
+        
         if (res?.ok) {
           toast.success("Successfully logged in");
           router.refresh();
         }
       })
       .catch((error) => {
+        toast.error("Wrong username or password")
         console.log(error);
-        toast.error("Login error!");
       })
       .finally(() => {
         setLoading(false);
@@ -80,7 +82,7 @@ const LoginModal = () => {
       <div className="flex gap-4 text-sm items-center justify-center">
         <div className="text-gray-700">Already have an account?</div>
         <div className="transition text-neutral-400 cursor-pointer hover:underline">
-          Login
+          Sign up
         </div>
       </div>
     </div>

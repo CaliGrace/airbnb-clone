@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { IconType } from "react-icons";
 
@@ -18,11 +18,11 @@ const Button: React.FC<ButtonProps> = ({
   outline,
   small,
   icon: Icon,
-}) => {     
+}) => {
   return (
     <button
-    onClick={onClick}
-    disabled={disabled}
+      onClick={onClick}
+      disabled={disabled}
       className={`relative text-center cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full
     ${
       outline
@@ -32,12 +32,8 @@ const Button: React.FC<ButtonProps> = ({
     ${small ? "py-1 font-light" : "font-semibold py-3"}
     `}
     >
-        {
-            Icon && (
-                <Icon size={20} className="absolute left-4"/>
-            )
-        }
-      {label}
+      {Icon && <Icon size={20} className="absolute left-4" />}
+      {disabled ? 'Loading...' : label}
     </button>
   );
 };
