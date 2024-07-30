@@ -5,3 +5,10 @@
 :root {
   height: 100%;
 }
+
+.leaflet-top,
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane {
+  z-index: 0 !important;
+}

@@ -1,14 +1,22 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, {
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
+
 import { IoMdMenu } from "react-icons/io";
 import Avatar from "../Avatar";
-import { useState } from "react";
+import { signOut } from "next-auth/react";
 import MenuItem from "./MenuItem";
+
 import useRegisterModal from "@/app/Hooks/useRegisterModal";
 import useLoginModal from "@/app/Hooks/useLoginModal";
 import { User } from "@prisma/client";
-import { signOut } from "next-auth/react";
+import useRentModal from "@/app/Hooks/useRent";
 
 interface UserMenuProps {
   currentUser?: User | null;
@@ -16,36 +24,90 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showModal, setShowModal] = useState(isOpen);
+
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
 
-  const toggleIsOpen = useCallback(() => {
-    setIsOpen(!isOpen);
+  const humbergerRef = useRef(null);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    setShowModal(isOpen);
   }, [isOpen]);
+
+  //close menu modal when clicking outside
+  useEffect(() => {
+    const handleMouseEvent = (event: MouseEvent) => {
+      if (
+        humbergerRef.current &&
+        menuRef.current &&
+        !event.composedPath().includes(humbergerRef.current) &&
+        !event.composedPath().includes(menuRef.current)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleMouseEvent);
+    return () => {
+      document.body.removeEventListener("click", handleMouseEvent);
+    };
+  }, []);
+
+  //toggle user menu
+  const toggleIsOpen = useCallback(() => {
+    if (!isOpen) {
+      setIsOpen(true);
+    } else {
+      setShowModal(!isOpen);
+      setTimeout(() => {
+        setIsOpen(!isOpen);
+      }, 300);
+    }
+  }, [isOpen]);
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    rentModal.onOpen();
+  }, [currentUser, loginModal]);
 
   return (
     <div className="flex items-center">
-      <div className="hidden md:block px-4 py-2 hover:bg-slate-100 rounded-full transition cursor-pointer">
+      <div
+        onClick={onRent}
+        className="hidden md:block px-4 py-2 hover:bg-slate-100 rounded-full transition cursor-pointer"
+      >
         Airbnb your home
       </div>
       <div
         onClick={toggleIsOpen}
-        className="flex justify-center cursor-pointer items-center gap-2 hover:shadow-md transition rounded-full px-3 py-1"
+        ref={humbergerRef}
+        className="flex justify-center transition cursor-pointer items-center gap-2 hover:shadow-md  rounded-full px-3 py-1"
       >
         <IoMdMenu />
         <div className="hidden md:block">
-          <Avatar src={currentUser?.image}/>
+          <Avatar src={currentUser?.image} />
         </div>
       </div>
       {isOpen && (
-        <div className="absolute w-36 right-14 top-20 bg-white shadow-md rounded-sm">
+        <div
+          ref={menuRef}
+          className={`${
+            showModal ? "translate-x-0" : "translate-x-full opacity-0"
+          } transition translate duration-300 absolute w-36 right-14 top-20 bg-white shadow-md rounded-sm`}
+        >
           {currentUser ? (
             <>
               <MenuItem label="My trips" onClick={() => {}} />
               <MenuItem label="My favorites" onClick={() => {}} />
               <MenuItem label="My reservations" onClick={() => {}} />
               <MenuItem label="My properties" onClick={() => {}} />
-              <MenuItem label="Airbnb my home" onClick={() => {}} />
+              <MenuItem label="Airbnb my home" onClick={onRent} />
               <hr />
               <MenuItem label="Logout" onClick={() => signOut()} />
             </>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import useLoginModal from "@/app/Hooks/useLoginModal";
@@ -31,19 +31,20 @@ const LoginModal = () => {
     },
   });
 
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
     signIn("credentials", { ...data, redirect: false })
       .then((res) => {
-        
         if (res?.ok) {
           toast.success("Successfully logged in");
           router.refresh();
+        } else {
+          toast.error(res?.error || "Login failed");
+          console.log('Error: ', res)
         }
       })
       .catch((error) => {
-        toast.error("Wrong username or password")
+        toast.error("Wrong username or password");
         console.log(error);
       })
       .finally(() => {
@@ -75,14 +76,26 @@ const LoginModal = () => {
     </div>
   );
 
+  const toggleModal = useCallback(()=> {
+    loginModal.onClose()
+    registerModal.onOpen()
+  }, [loginModal, registerModal])
+
   const footer = (
     <div className="flex flex-col gap-4 p-6">
       <Button label="Google" icon={FcGoogle} onClick={() => {}} outline />
-      <Button label="Github" icon={FaGithub} onClick={() => {signIn('github')}} outline />
+      <Button
+        label="Github"
+        icon={FaGithub}
+        onClick={() => {
+          signIn("github");
+        }}
+        outline
+      />
       <div className="flex gap-4 text-sm items-center justify-center">
-        <div className="text-gray-700">Already have an account?</div>
-        <div className="transition text-neutral-400 cursor-pointer hover:underline">
-          Sign up
+        <div className="text-gray-700">First time using Airbnb?</div>
+        <div className="transition text-neutral-400 cursor-pointer hover:underline"  onClick={toggleModal}>
+          Create Account
         </div>
       </div>
     </div>
