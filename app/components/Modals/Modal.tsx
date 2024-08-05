@@ -91,7 +91,7 @@ const Modal: React.FC<ModalProps> = ({
               </div>
 
               {/* FOOTER */}
-              <div className="flex flex-col px-6 gap-2 w-full">
+              <div className="flex flex-col md:flex-row-reverse px-6 gap-2 w-full">
                 {
                   actionLabel && 
                 <Button

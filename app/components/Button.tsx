@@ -33,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
     `}
     >
       {Icon && <Icon size={20} className="absolute left-4" />}
-      {disabled ? 'Loading...' : label}
+      {disabled ? "Loading..." : label}
     </button>
   );
 };
