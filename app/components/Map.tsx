@@ -1,3 +1,4 @@
+// "use client"
 import { LatLngExpression } from "leaflet";
 import L from 'leaflet'
 

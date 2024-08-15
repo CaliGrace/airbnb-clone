@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactHTMLElement } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import useFavorites from "@/app/Hooks/useFavorites";
@@ -8,7 +8,7 @@ import { User } from "@prisma/client";
 
 interface HeartButtonProps {
   listingId: string;
-  currentUser: User | null;
+  currentUser?: User | null;
 }
 
 const HeartButton: React.FC<HeartButtonProps> = ({
@@ -22,8 +22,10 @@ const HeartButton: React.FC<HeartButtonProps> = ({
 
   return (
     <div
-      className="relative"
-      onClick={() => {
+      className="relative cursor-pointer"
+      onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
         toggleFavorite();
       }}
     >

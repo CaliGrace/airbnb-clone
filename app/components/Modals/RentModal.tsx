@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import useRentModal from "@/app/Hooks/useRent";
 import Heading from "../Heading";
 
-import { categoryList } from "../Navbar/Categories";
+import { categoryList } from "@/libs/categoryList";
 import CategoryInput from "../inputs/CategoryInput";
 import {
   FieldValue,
@@ -35,6 +35,7 @@ enum STEPS {
 const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -84,6 +85,8 @@ const RentModal = () => {
       return onNext();
     }
 
+    setLoading(true);
+
     axios
       .post("/api/listing", data)
       .then((res) => {
@@ -93,6 +96,9 @@ const RentModal = () => {
       })
       .catch((error) => {
         toast.error("Error occured");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -252,6 +258,7 @@ const RentModal = () => {
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       isOpen={rentModal.isOpen}
+      disabled={loading}
       onClose={rentModal.onClose}
       onSubmit={handleSubmit(submitHandler)}
       body={bodyContent}

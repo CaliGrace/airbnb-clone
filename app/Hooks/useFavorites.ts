@@ -1,4 +1,3 @@
-// "use client"
 import Prisma from "@/libs/prismadb";
 import { getCurrentUser } from "../actions/getCurrentUser";
 import { useCallback, useMemo, useEffect } from "react";
@@ -17,9 +16,9 @@ const useFavorites = ({ listingId, currentUser }: IUseFavorites) => {
   const loginModal = useLoginModal();
   const router = useRouter();
 
-  if (!currentUser) {
-    throw new Error();
-  }
+  // if (!currentUser) {
+  //   throw new Error();
+  // }
 
   const favoriteList = currentUser?.favoriteIds;
 
