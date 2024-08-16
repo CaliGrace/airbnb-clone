@@ -24,7 +24,10 @@ const Navbar: React.FC<NavbarProps> = ({currentUser}) => {
           </div>
         </Container>
       </div>
+      <div className="shadow-md">
+
         <Categories />
+      </div>
     </div>
   )
 }

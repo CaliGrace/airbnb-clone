@@ -25,7 +25,7 @@ import { MdOutlineVilla } from "react-icons/md";
 import ListingInfo from "./ListingInfo";
 import useLoginModal from "@/app/Hooks/useLoginModal";
 import { useRouter } from "next/navigation";
-import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
+import { differenceInCalendarDays, eachDayOfInterval, format } from "date-fns";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -136,6 +136,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
+
       const dayCount = differenceInCalendarDays(
         dateRange.endDate,
         dateRange.startDate
@@ -180,8 +181,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
       .then(() => {
         toast.success("Listing reserved!");
         setDateRange(initialDateRange);
-        //redirect to trips
-        router.refresh();
+        router.push("/trips");
+        router.refresh()
       })
       .catch(() => {
         toast.error("Something went wrong");

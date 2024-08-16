@@ -43,6 +43,7 @@ const RentModal = () => {
     formState: { errors },
     watch,
     handleSubmit,
+    reset
   } = useForm<FieldValues>({
     defaultValues: {
       category: "",
@@ -99,6 +100,8 @@ const RentModal = () => {
       })
       .finally(() => {
         setLoading(false);
+        setStep(STEPS.CATEGORY)
+        reset()
       });
   };
 

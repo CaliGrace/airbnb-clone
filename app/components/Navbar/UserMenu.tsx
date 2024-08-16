@@ -17,6 +17,7 @@ import useRegisterModal from "@/app/Hooks/useRegisterModal";
 import useLoginModal from "@/app/Hooks/useLoginModal";
 import { User } from "@prisma/client";
 import useRentModal from "@/app/Hooks/useRent";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   currentUser?: User | null;
@@ -29,6 +30,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
+  const router = useRouter()
 
   const humbergerRef = useRef(null);
   const menuRef = useRef(null);
@@ -103,10 +105,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         >
           {currentUser ? (
             <>
-              <MenuItem label="My trips" onClick={() => {}} />
-              <MenuItem label="My favorites" onClick={() => {}} />
-              <MenuItem label="My reservations" onClick={() => {}} />
-              <MenuItem label="My properties" onClick={() => {}} />
+              <MenuItem label="My trips" onClick={() => {router.push('/trips')}} />
+              <MenuItem label="My favorites" onClick={() => {router.push('/favorites')}} />
+              <MenuItem label="My reservations" onClick={() => {router.push('/reservations')}} />
+              <MenuItem label="My properties" onClick={() => {router.push('/properties')}} />
               <MenuItem label="Airbnb my home" onClick={onRent} />
               <hr />
               <MenuItem label="Logout" onClick={() => signOut()} />
