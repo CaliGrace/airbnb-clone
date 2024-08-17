@@ -21,7 +21,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
     <div className="h-[60vh] flex flex-col items-center justify-center gap-4">
       <Heading title={title} subtitle={subTitle} center />
       {reset && (
-        <div className="w-[20%]">
+        <div className="w-[10%]">
 
             <Button
               label="Reset Filters"

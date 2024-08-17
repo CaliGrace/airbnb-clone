@@ -8,6 +8,15 @@ const Favorites = async () => {
   const favorites = await getFavoriteListings();
   const currentUser = await getCurrentUser()
 
+  if(!currentUser) {
+    return (
+      <EmptyState
+        title="Unauthorized user"
+        subTitle="Please login to add your favorites"
+      />
+    )
+  }
+
   if (favorites.length === 0) {
     return (
       <EmptyState

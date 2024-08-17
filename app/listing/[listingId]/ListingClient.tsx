@@ -121,6 +121,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   reservations,
   currentUser,
 }) => {
+  
   const initialDateRange = {
     startDate: new Date(),
     endDate: new Date(),
