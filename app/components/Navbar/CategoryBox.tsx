@@ -4,6 +4,7 @@ import queryString from "query-string";
 
 import React, { useCallback } from "react";
 import { IconType } from "react-icons";
+import { Suspense } from "react";
 
 interface CategoryBoxProps {
   label: string;
@@ -47,6 +48,8 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
 }, [label,router,params])
 
   return (
+    <Suspense>
+    
     <div
       onClick={handleClick}
       className={`flex flex-col items-center justify-center gap-2 p-3 border-b-2 hover:text-neutral-800 transition cursor-pointer ${
@@ -58,6 +61,8 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
       <Icon size={26} />
       <div className="font-medium text-sm">{label}</div>
     </div>
+      
+    </Suspense>
   );
 };
 

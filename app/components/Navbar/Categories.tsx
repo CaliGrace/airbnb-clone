@@ -4,6 +4,7 @@ import CategoryBox from "./CategoryBox";
 import Container from "../Container";
 import { usePathname, useSearchParams } from "next/navigation";
 import { categoryList } from "../../listing/[listingId]/ListingClient";
+import {Suspense } from 'react'
 
 const Categories = () => {
   const params = useSearchParams();
@@ -17,6 +18,8 @@ const Categories = () => {
   }
 
   return (
+    <Suspense>
+
     <Container>
       <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto w-full">
         {categoryList.map((item) => (
@@ -30,6 +33,7 @@ const Categories = () => {
         ))}
       </div>
     </Container>
+    </Suspense>
   );
 };
 

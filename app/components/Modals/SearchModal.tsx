@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import qs from "query-string";
 import useSearchModal from "@/app/Hooks/useSearchModal";
 import { useRouter, useSearchParams } from "next/navigation";
+import {Suspense} from 'react'
 
 import Modal from "./Modal";
 import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
@@ -158,16 +159,19 @@ const SearchModal = () => {
   }
 
   return (
-    <Modal
-      isOpen={searchModal.isOpen}
-      title="Filter"
-      actionLabel={actionLabel()}
-      onSubmit={onSubmit}
-      secondaryAction={onBack}
-      secondaryActionLabel={secondaryActionLabel()}
-      onClose={searchModal.onClose}
-      body={bodyContent}
-    />
+    <Suspense>
+
+      <Modal
+        isOpen={searchModal.isOpen}
+        title="Filter"
+        actionLabel={actionLabel()}
+        onSubmit={onSubmit}
+        secondaryAction={onBack}
+        secondaryActionLabel={secondaryActionLabel()}
+        onClose={searchModal.onClose}
+        body={bodyContent}
+      />
+    </Suspense>
   );
 };
 
