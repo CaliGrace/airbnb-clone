@@ -7,7 +7,7 @@ import RegisterModal from "./components/Modals/RegisterModal";
 import { Toaster } from "react-hot-toast";
 import LoginModal from "./components/Modals/LoginModal";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+
 import { getCurrentUser } from "./actions/getCurrentUser";
 import RentModal from "./components/Modals/RentModal";
 import SearchModal from "./components/Modals/SearchModal";
