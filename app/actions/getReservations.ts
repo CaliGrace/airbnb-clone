@@ -24,8 +24,6 @@ export default async function getReservations(params: IParams) {
       query.listingId = listingId;
     }
 
-    console.log(query)
-
     const reservations = await Prisma.reservation.findMany({
       where: query,
       include: {

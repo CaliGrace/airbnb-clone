@@ -43,6 +43,7 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({
       <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
         {reservations.map((reservation) => (
           <ListingCard
+          key={reservation.id}
             data={(reservation as any).listing}
             currentUser={currentUser}
             reservation={reservation}

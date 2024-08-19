@@ -17,7 +17,7 @@ const Reservation = async () => {
 
   if (reservations.length === 0) {
     return (
-      <EmptyState title="No reservations" subTitle="Go ahead and login" />
+      <EmptyState title="No reservations" subTitle="Guests reserved your properties appear here" />
     );
   }
   return <ReservationsClient reservations={reservations} currentUser={currentUser}/>

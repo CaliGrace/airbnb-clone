@@ -81,7 +81,7 @@ const ListingCard: React.FC<DataProps> = ({
             <HeartButton listingId={data.id} currentUser={currentUser} />
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center flex-wrap gap-2">
           <p className="font-bold">{data.title}, </p>
           <p className="text-slate-700 text-xs">{country?.label}</p>
         </div>

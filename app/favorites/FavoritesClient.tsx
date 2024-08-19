@@ -16,7 +16,7 @@ const FavoritesClient: React.FC<FavoritesClient> = ({currentUser, favorites}) =>
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
             {
                 favorites.map((listing) => (
-                    <ListingCard data={listing} currentUser={currentUser}/>
+                    <ListingCard key={listing.id} data={listing} currentUser={currentUser}/>
                 ))
             }
         </div>
